@@ -20,14 +20,16 @@ public class MyGdxGame extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 		imgFon = new Texture("fon.jpg");
 		region = new TextureRegion(img, 20,25,150,100);
+
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1,0,0,1);
+		Gdx.gl.glClearColor(0,0,0,0.3f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img,  200, 135 );
+		batch.setColor(0,0,0,0.9f);
 		batch.draw(imgFon,  0, 0 ,700,700);
 		batch.end();
 	}
