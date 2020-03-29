@@ -18,7 +18,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.gl.glClearColor(0,0,0,0.3f);
+        Gdx.gl.glClearColor(0.5f,1,0,0.3f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(img,  200, 135 );
