@@ -8,12 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.my.game.Base.BaseScreen;
 import com.my.game.math.Rect;
 import com.my.game.sprite.Background;
+import com.my.game.sprite.MyClass;
 
 public class MenuScreen extends BaseScreen {
 
     private Texture img;
     private Texture bg;
-    private Vector2 pos;
+
+    private MyClass myClass ;
 
     private Background background;
 
@@ -22,8 +24,8 @@ public class MenuScreen extends BaseScreen {
         super.show();
         img = new Texture("badlogic.jpg");
         bg = new Texture("textures/bg.png");
-        pos = new Vector2();
         background = new Background(bg);
+        myClass = new MyClass(img);
     }
 
     @Override
@@ -31,9 +33,10 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         Gdx.gl.glClearColor(0.5f, 0.9f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        myClass.update(delta);
         batch.begin();
         background.draw(batch);
-        batch.draw(img, pos.x, pos.y, 0.5f, 0.5f);
+        myClass.draw(batch);
         batch.end();
     }
 
@@ -48,10 +51,12 @@ public class MenuScreen extends BaseScreen {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         background.resize(worldBounds);
+        myClass.resize(worldBounds);
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-        return super.touchDown(touch, pointer, button);
+        myClass.touchDown(touch,pointer,button);
+        return false;
     }
 }
