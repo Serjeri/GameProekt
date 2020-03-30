@@ -8,6 +8,7 @@ import com.my.game.Base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
 
+    private static final float V_len = 1f;
     private Texture img;
     private Vector2 touch;
     private Vector2 V;
@@ -18,7 +19,7 @@ public class MenuScreen extends BaseScreen {
         super.show();
         img = new Texture("badlogic.jpg");
         touch = new Vector2();
-        V = new Vector2(1f,1f);
+        V = new Vector2();
         positions = new Vector2();
     }
 
@@ -27,11 +28,14 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         Gdx.gl.glClearColor(0.5f,1,0,0.3f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if((positions.y + img.getHeight()) < Gdx.graphics.getHeight()){
+//        if((positions.y + img.getHeight()) < Gdx.graphics.getHeight()){
+//        }
+        if (touch.cpy().sub(positions).len() > V_len )
             positions.add(V);
-        }
+        else
+            positions.set(touch);
         batch.begin();
-        batch.draw(img,  positions.x,positions.y );
+        batch.draw(img,  positions.x,positions.y);
         batch.end();
     }
 
@@ -43,9 +47,10 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-         super.touchDown(screenX, screenY, pointer, button);
-         touch.set(screenX, Gdx.graphics.getHeight() - screenY);
-        System.out.println("touch.X = " + touch.X + " touchY = " +  touch.Y);
+        super.touchDown(screenX, screenY, pointer, button);
+        touch.set(screenX, Gdx.graphics.getHeight() - screenY);
+        V.set(touch.cpy().sub(positions).setLength(V_len));
+        //  System.out.println("touch.X = " + touch.X + " touchY = " +  touch.Y);
         return false;
     }
 }
