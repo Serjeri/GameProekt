@@ -13,7 +13,7 @@ public class MenuScreen extends BaseScreen {
     private Vector2 touch;
     private Vector2 V;
     private Vector2 positions;
-
+private Vector2 Buf;
     @Override
     public void show() {
         super.show();
@@ -21,6 +21,7 @@ public class MenuScreen extends BaseScreen {
         touch = new Vector2();
         V = new Vector2();
         positions = new Vector2();
+        Buf = new Vector2();
     }
 
     @Override
@@ -30,6 +31,7 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        if((positions.y + img.getHeight()) < Gdx.graphics.getHeight()){
 //        }
+        Buf.set(touch);
         if (touch.cpy().sub(positions).len() > V_len )
             positions.add(V);
         else
