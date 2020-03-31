@@ -25,6 +25,7 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override
+
     public void render(float delta) {
 update(delta);
 draw();
