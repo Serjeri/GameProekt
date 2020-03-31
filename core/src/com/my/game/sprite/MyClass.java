@@ -21,6 +21,7 @@ public class MyClass extends Sprite {
         Buf = new Vector2();
     }
 
+    
     @Override
     public void resize(Rect worldBounds) {
         setHeightProportion(0.4f);
