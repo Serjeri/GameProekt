@@ -86,14 +86,14 @@ public class Main_ship extends Sprite {
     }
     @Override
     public void touchDown(Vector2 touch, int pointer, int button) {
-        if (touch.x < worldBounds.pos.x ){
-            if(left_pointer != invalind){
+        if (touch.x < worldBounds.pos.x) {
+            if (left_pointer != invalind) {
                 return;
             }
             left_pointer = pointer;
             left();
-        }else {
-            if(right_pointer != invalind){
+        } else {
+            if (right_pointer != invalind) {
                 return;
             }
             right_pointer = pointer;
@@ -103,24 +103,22 @@ public class Main_ship extends Sprite {
 
     @Override
     public void touchUp(Vector2 touch, int pointer, int button) {
-        if(pointer == left_pointer){
+        if (pointer == left_pointer) {
             left_pointer = invalind;
-            if(right_pointer != invalind){
+            if (right_pointer != invalind) {
                 right();
-            }else {
+            } else {
                 stop();
             }
-        }else if (pointer == right_pointer){
+        } else if (pointer == right_pointer) {
             right_pointer = invalind;
-            if(left_pointer != invalind){
+            if (left_pointer != invalind) {
                 left();
-            }else {
+            } else {
                 stop();
             }
         }
     }
-
-
 
     private void right(){
         V1.set(V2);

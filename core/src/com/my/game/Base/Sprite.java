@@ -13,6 +13,12 @@ public abstract class Sprite extends Rect {
     protected TextureRegion[] regions;
     protected int frame;
 
+    protected boolean destroyed;
+
+    public Sprite() {
+
+    }
+
     public Sprite(TextureRegion region) {
         if (region == null) {
             throw new RuntimeException("Не задана текстура");
@@ -62,5 +68,16 @@ public abstract class Sprite extends Rect {
 
     public void setScale(float scale) {
         this.scale = scale;
+    }
+
+    public void Destroy(){
+        this.destroyed = true;
+    }
+    public void flush () {
+        this.destroyed = false;
+    }
+
+    public boolean destroy() {
+        return destroyed;
     }
 }
