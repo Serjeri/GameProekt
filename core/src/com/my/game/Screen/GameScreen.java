@@ -42,6 +42,13 @@ public class GameScreen extends BaseScreen {
         draw();
 
     }
+    private void update(float delta){
+        main_ship.update(delta);
+        for (Star star : star) {
+            star.update(delta);
+        }
+    }
+
     private void draw(){
         Gdx.gl.glClearColor(0.5f, 0.9f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -92,15 +99,10 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        main_ship.touchDown(touch, pointer, button);
+        main_ship.touchUp(touch, pointer, button);
         return false;
     }
-    private void update(float delta){
-        main_ship.update(delta);
-        for (Star star : star) {
-            star.update(delta);
-        }
-    }
+
 
 
 }
