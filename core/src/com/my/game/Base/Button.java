@@ -31,8 +31,8 @@ public abstract class Button extends  Sprite {
         }if(isMe(touch)){
             action();
         }
-        pressed = false;
-        scale = 1f;
+        this.pressed = false;
+        this.scale = 1f;
     }
 
     public abstract void action();

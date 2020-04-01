@@ -10,6 +10,8 @@ import com.my.game.math.Rect;
 
 public class ButtonPlay extends Button {
 
+    private static final float size = 0.26f;
+
     private final Game game;
 
     private static final float padding = 0.05f;
@@ -26,7 +28,7 @@ public class ButtonPlay extends Button {
 
     @Override
     public void resize(Rect worldBounds) {
-        setHeightProportion(0.26f);
+        setHeightProportion(size);
         setLeft(worldBounds.getLeft() + padding);
         setBottom(worldBounds.getBottom() + padding);
     }

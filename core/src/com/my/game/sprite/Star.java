@@ -8,7 +8,7 @@ import com.my.game.math.Rnd;
 
 public class Star extends Sprite {
 
-    private static  final float start_heigh = 0.007f;
+    private static  final float start_heigh = 0.005f;
 
     private final Vector2 v;
     private Rect worldBounds;

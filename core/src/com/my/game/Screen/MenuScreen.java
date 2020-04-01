@@ -22,11 +22,14 @@ public class MenuScreen extends BaseScreen {
     private Texture bg;
 
     private Background background;
+
     private static final int start_count = 256;
+
     private Star[] star ;
 
     private ButtonExit buttonExit;
     private ButtonPlay buttonPlay;
+
 
     public MenuScreen(Game game) {
         this.game = game;
