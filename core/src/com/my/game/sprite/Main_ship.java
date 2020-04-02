@@ -167,6 +167,7 @@ public class Main_ship extends Sprite {
         V1.setZero();
     }
 
+
     private void shoot() {
         shootSound.play();
         Bullet bullet = bulletPool.obtain();
