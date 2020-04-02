@@ -2,15 +2,20 @@ package com.my.game.sprite;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.my.game.Base.Sprite;
 import com.my.game.math.Rect;
 
+import com.my.game.pool.BulletPool;
+
 public class Main_ship extends Sprite {
 
-    private static final float size_ship = 0.1f;
+    private static final float size_ship = 0.15f;
     private static final float padding = 0.05f;
     private static final int  invalind = -1;
+
+    private final Vector2 bulletPos;
 
     private boolean press_left;
     private boolean press_right;
@@ -22,12 +27,20 @@ public class Main_ship extends Sprite {
 
     private Rect worldBounds;
 
-    public Main_ship(TextureAtlas atlas) {
-        super(atlas.findRegion("main_ship"));
+    private BulletPool bulletPool;
+    private TextureRegion bulletRegion;
+
+    private final Vector2 bulletV;
+
+    public Main_ship(TextureAtlas atlas, BulletPool bulletPool) {
+        super(atlas.findRegion("main_ship"),1,2,2);
         V1 = new Vector2();
         V2 = new Vector2(0.5f,0);
+        this.bulletPool = bulletPool;
+        this.bulletRegion = atlas.findRegion("bulletMainShip");
+        this.bulletV = new Vector2(0,0.5f);
+        this.bulletPos =  new Vector2();
     }
-
     @Override
     public void resize(Rect worldBounds) {
         setHeightProportion(size_ship);
@@ -59,6 +72,8 @@ public class Main_ship extends Sprite {
                 press_right = true;
                 right();
                 break;
+            case Input.Keys.UP:
+                shoot();
         }
     }
 
@@ -132,5 +147,9 @@ public class Main_ship extends Sprite {
         V1.setZero();
     }
 
-
+    private void shoot() {
+        Bullet bullet = bulletPool.obtain();
+        bulletPos.set(pos.x, getTop());
+        bullet.set(this, bulletRegion, bulletPos, bulletV, 0.01f, worldBounds, 1);
+    }
 }

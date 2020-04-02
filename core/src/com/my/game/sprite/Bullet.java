@@ -10,7 +10,7 @@ public class Bullet extends Sprite {
     private Rect worldBounds;
     private final Vector2 v;
     private int damage;
-    private Sprite owener;
+    private Sprite owner;
 
     public Bullet() {
         regions = new TextureRegion[1];
@@ -20,11 +20,11 @@ public class Bullet extends Sprite {
 
     public void set(Sprite owner,TextureRegion region,Vector2 v0 ,Vector2 pos0,float height, Rect worldBounds, int damage) {
 
-        setHeightProportion(height);
-        this.owener = owner;
+        this.owner = owner;
         this.regions[0] = region;
-        this.pos.set(pos0);
         this.v.set(v0);
+        this.pos.set(pos0);
+        setHeightProportion(height);
         this.worldBounds = worldBounds;
         this.damage = damage;
 
@@ -33,7 +33,7 @@ public class Bullet extends Sprite {
     @Override
     public void update(float delta) {
         this.pos.mulAdd(v, delta);
-        if(isOutside(worldBounds)){
+        if (isOutside(worldBounds)) {
             destroy();
         }
     }
@@ -42,7 +42,7 @@ public class Bullet extends Sprite {
         return damage;
     }
 
-    public Sprite getOwener() {
-        return owener;
+    public Sprite getOwner() {
+        return owner;
     }
 }

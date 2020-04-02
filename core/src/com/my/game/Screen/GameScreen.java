@@ -11,6 +11,8 @@ import com.my.game.sprite.Background;
 import com.my.game.sprite.Main_ship;
 import com.my.game.sprite.Star;
 
+import com.my.game.pool.BulletPool;
+
 public class GameScreen extends BaseScreen {
 
     private static final int start_count = 128;
@@ -22,6 +24,8 @@ public class GameScreen extends BaseScreen {
     private Background background;
     private Main_ship main_ship;
 
+    private BulletPool bulletPool;
+
     @Override
     public void show() {
         super.show();
@@ -29,24 +33,28 @@ public class GameScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         background = new Background(bg);
         atlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
-        main_ship = new Main_ship(atlas);
         star = new Star[start_count];
         for (int i = 0; i < start_count ; i++) {
             star[i] = new Star(atlas);
         }
+        bulletPool = new BulletPool();
+        main_ship = new Main_ship(atlas, bulletPool);
+
     }
 
     @Override
     public void render(float delta) {
         update(delta);
+        freeAllDestroed();
         draw();
-
     }
+
     private void update(float delta){
         main_ship.update(delta);
         for (Star star : star) {
             star.update(delta);
         }
+        bulletPool.updateActiveSprites(delta);
     }
 
     private void draw(){
@@ -59,6 +67,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : star) {
             star.draw(batch);
         }
+        bulletPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -77,6 +86,7 @@ public class GameScreen extends BaseScreen {
         super.dispose();
         bg.dispose();
         atlas.dispose();
+        bulletPool.dispolse();
     }
 
     @Override
@@ -103,6 +113,7 @@ public class GameScreen extends BaseScreen {
         return false;
     }
 
-
-
+    private void freeAllDestroed (){
+        bulletPool.freeAllDestroyedActiveObjects();
+    }
 }

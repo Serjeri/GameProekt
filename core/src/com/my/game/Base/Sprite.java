@@ -5,18 +5,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import com.my.game.math.Rect;
+import com.my.game.utils.Regions;
 
 public abstract class Sprite extends Rect {
 
     protected float angle;
     protected float scale = 1f;
+
     protected TextureRegion[] regions;
+
     protected int frame;
 
     protected boolean destroyed;
 
-    public Sprite() {
+    public Sprite(float angle) {
+        this.angle = angle;
+    }
 
+    public Sprite(TextureRegion region, int rows, int cols, int frames) {
+        if (region == null) {
+            throw new RuntimeException("Не задана текстура");
+        }
+        this.regions = Regions.split(region, rows, cols, frames);
     }
 
     public Sprite(TextureRegion region) {
@@ -25,6 +35,9 @@ public abstract class Sprite extends Rect {
         }
         regions = new TextureRegion[1];
         regions[0] = region;
+    }
+
+    protected Sprite() {
     }
 
     public void draw(SpriteBatch batch) {
@@ -70,14 +83,14 @@ public abstract class Sprite extends Rect {
         this.scale = scale;
     }
 
-    public void Destroy(){
+    public void destroy(){
         this.destroyed = true;
     }
     public void flush () {
         this.destroyed = false;
     }
 
-    public boolean destroy() {
+    public boolean isDestroyed() {
         return destroyed;
     }
 }
