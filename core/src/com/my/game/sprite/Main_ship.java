@@ -2,53 +2,38 @@ package com.my.game.sprite;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.my.game.Base.Sprite;
+import com.my.game.Base.Ship;
 import com.my.game.math.Rect;
-
 import com.my.game.pool.BulletPool;
+import com.my.game.pool.ExplosionPool;
 
-import sun.nio.cs.ext.GBK;
-
-public class Main_ship extends Sprite {
-
-    private float time;
-    private float interval;
+public class Main_ship extends Ship {
 
     private static final float size_ship = 0.15f;
     private static final float padding = 0.05f;
     private static final int  invalind = -1;
 
-    private final Vector2 bulletPos;
-
     private boolean press_left;
     private boolean press_right;
 
-    private final Vector2 V1;
-    private final Vector2 V2;
-    private int left_pointer = invalind;
-    private int right_pointer = invalind;
+    protected int left_pointer = invalind;
+    protected int right_pointer = invalind;
 
-    private Rect worldBounds;
 
-    private BulletPool bulletPool;
-    private TextureRegion bulletRegion;
-
-    private final Vector2 bulletV;
-
-    private Sound shootSound;
-
-    public Main_ship(TextureAtlas atlas, BulletPool bulletPool) {
+    public Main_ship(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"),1,2,2);
-        V1 = new Vector2();
-        V2 = new Vector2(0.5f,0);
+        this.v = new Vector2();
+        this.v0 = new Vector2(0.5f,0);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletV = new Vector2(0,0.5f);
         this.bulletPos =  new Vector2();
+        this.bulletHeight = 0.01f;
+        this.damage = 1;
+        this.hp = 100;
         this.interval = 0.5f;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
@@ -61,19 +46,14 @@ public class Main_ship extends Sprite {
 
     @Override
     public void update(float delta) {
-        pos.mulAdd(V1, delta);
+        bulletPos.set(pos.x, getTop());
+        super.update(delta);
         if(getRight() > worldBounds.getRight()){
             setRight(worldBounds.getRight());
             stop();
         }if(getLeft() < worldBounds.getLeft()){
             setLeft(worldBounds.getLeft());
             stop();
-        }
-        time += delta;
-
-        if(time >= interval){
-            time = 0;
-            shoot();
         }
     }
 
@@ -156,26 +136,14 @@ public class Main_ship extends Sprite {
     }
 
     private void right(){
-        V1.set(V2);
+        v.set(v0);
     }
 
     private void left(){
-        V1.set(V2).rotate(180);
+        v.set(v0).rotate(180);
     }
 
     private void stop(){
-        V1.setZero();
-    }
-
-
-    private void shoot() {
-        shootSound.play();
-        Bullet bullet = bulletPool.obtain();
-        bulletPos.set(pos.x, getTop());
-        bullet.set(this, bulletRegion, bulletPos, bulletV, 0.01f, worldBounds, 1);
-    }
-
-    public void dispose() {
-    shootSound.dispose();
+        v.setZero();
     }
 }
