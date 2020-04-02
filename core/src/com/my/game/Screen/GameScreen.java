@@ -1,6 +1,7 @@
 package com.my.game.Screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,11 +26,11 @@ public class GameScreen extends BaseScreen {
     private Main_ship main_ship;
 
     private BulletPool bulletPool;
+    private Music music;
 
     @Override
     public void show() {
         super.show();
-
         bg = new Texture("textures/bg.png");
         background = new Background(bg);
         atlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
@@ -40,6 +41,9 @@ public class GameScreen extends BaseScreen {
         bulletPool = new BulletPool();
         main_ship = new Main_ship(atlas, bulletPool);
 
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        music.setLooping(true);
+        music.play();
     }
 
     @Override
@@ -82,11 +86,23 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override
+    public void pause() {
+        music.pause();
+    }
+
+    @Override
+    public void resume() {
+        music.play();
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
         bg.dispose();
         atlas.dispose();
         bulletPool.dispolse();
+        music.dispose();
+        main_ship.dispose();
     }
 
     @Override
