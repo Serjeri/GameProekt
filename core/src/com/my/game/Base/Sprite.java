@@ -11,16 +11,10 @@ public abstract class Sprite extends Rect {
 
     protected float angle;
     protected float scale = 1f;
-
     protected TextureRegion[] regions;
-
     protected int frame;
-
     protected boolean destroyed;
 
-    public Sprite(float angle) {
-        this.angle = angle;
-    }
 
     public Sprite(TextureRegion region, int rows, int cols, int frames) {
         if (region == null) {

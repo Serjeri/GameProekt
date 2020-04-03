@@ -12,11 +12,15 @@ import com.my.game.math.Rect;
 import com.my.game.pool.EnemyPool;
 import com.my.game.pool.ExplosionPool;
 import com.my.game.sprite.Background;
+import com.my.game.sprite.Bullet;
+import com.my.game.sprite.Enemy;
 import com.my.game.sprite.Main_ship;
 import com.my.game.sprite.Star;
 
 import com.my.game.pool.BulletPool;
 import com.my.game.utils.EnemiesEmitter;
+
+import java.util.List;
 
 public class GameScreen extends BaseScreen {
 
@@ -65,8 +69,10 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         update(delta);
+        checColision();
         freeAllDestroed();
         draw();
+
     }
 
     private void update(float delta){
@@ -104,6 +110,32 @@ public class GameScreen extends BaseScreen {
         main_ship.resize(worldBounds);
         for (Star star : star) {
             star.resize(worldBounds);
+        }
+    }
+    private void checColision (){
+// не разобрался Copy Past с видео урока.
+        List<Enemy> enemyList = enemyPool.getActiveObjects();
+        for (Enemy enemy: enemyList) {
+            float minDist = main_ship.getHalfWidth() + enemy.getHalfWidth();
+            if(main_ship.pos.dst(enemy.pos) <= minDist) {
+                enemy.destroy();
+            }
+        }
+        List<Bullet> bulletList = bulletPool.getActiveObjects();
+        for (Bullet bullet: bulletList) {
+            if (bullet.getOwner() != main_ship) {
+                if (main_ship.isBulletCollision(bullet)) {
+                    main_ship.Damage(bullet.getDamage());
+                    bullet.destroy();
+                }
+                continue;
+            }
+            for (Enemy enemy: enemyList) {
+                if(enemy.isBulletCollision(bullet)){
+                    enemy.Damage(bullet.getDamage());
+                    bullet.destroy();
+                }
+            }
         }
     }
 
@@ -161,7 +193,5 @@ public class GameScreen extends BaseScreen {
         explosionPool.freeAllDestroyedActiveObjects();
         enemyPool.freeAllDestroyedActiveObjects();
     }
-    private void checColision (){
 
-    }
 }

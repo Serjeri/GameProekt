@@ -23,6 +23,9 @@ public class Ship extends Sprite {
     protected float bulletHeight;
     protected int damage;
 
+    protected final float damageInterval = 0.5f;
+    protected  float damageTimer = damageInterval;
+
     protected int hp;
 
     protected float time;
@@ -30,6 +33,7 @@ public class Ship extends Sprite {
 
     protected Sound shootSound;
     protected ExplosionPool explosionPool;
+
 
     public Ship() {
     }
@@ -47,6 +51,10 @@ public class Ship extends Sprite {
             time = 0;
             shoot();
         }
+        damageTimer += delta;
+        if(damageTimer >= damageInterval){
+            frame = 0;
+        }
     }
     public void dispose() {
         shootSound.dispose();
@@ -55,7 +63,16 @@ public class Ship extends Sprite {
     @Override
     public void destroy() {
         super.destroy();
+        this.hp = 0;
         Boom();
+    }
+    public void Damage( int damage){
+        this.hp -= damage;
+        if(hp <= 0){
+            destroy();
+        }
+        damageTimer= 0f;
+        frame = 1;
     }
 
     protected void shoot() {

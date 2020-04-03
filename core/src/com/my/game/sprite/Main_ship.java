@@ -33,7 +33,7 @@ public class Main_ship extends Ship {
         this.bulletPos =  new Vector2();
         this.bulletHeight = 0.01f;
         this.damage = 1;
-        this.hp = 100;
+        this.hp = 10;
         this.interval = 0.5f;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
@@ -133,6 +133,11 @@ public class Main_ship extends Ship {
                 stop();
             }
         }
+    }
+    public boolean isBulletCollision(Rect bullet){
+        return !(bullet.getRight() < getLeft() || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y
+                || bullet.getTop() < getBottom());
     }
 
     private void right(){
