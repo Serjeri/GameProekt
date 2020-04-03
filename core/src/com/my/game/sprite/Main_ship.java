@@ -11,16 +11,12 @@ import com.my.game.pool.ExplosionPool;
 
 public class Main_ship extends Ship {
 
-    private static final float size_ship = 0.15f;
-    private static final float padding = 0.05f;
     private static final int  invalind = -1;
 
     private boolean press_left;
     private boolean press_right;
-
     protected int left_pointer = invalind;
     protected int right_pointer = invalind;
-
 
     public Main_ship(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"),1,2,2);
@@ -33,15 +29,15 @@ public class Main_ship extends Ship {
         this.bulletPos =  new Vector2();
         this.bulletHeight = 0.01f;
         this.damage = 1;
-        this.hp = 10;
         this.interval = 0.5f;
+        this.hp = 10;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
     @Override
     public void resize(Rect worldBounds) {
-        setHeightProportion(size_ship);
-        setBottom(worldBounds.getBottom() + padding );
         this.worldBounds = worldBounds;
+        setHeightProportion(0.15f);
+        setBottom(worldBounds.getBottom() + 0.03f );
     }
 
     @Override
@@ -56,7 +52,41 @@ public class Main_ship extends Ship {
             stop();
         }
     }
+    @Override
+    public void touchDown(Vector2 touch, int pointer, int button) {
+        if (touch.x < worldBounds.pos.x) {
+            if (left_pointer != invalind) {
+                return;
+            }
+            left_pointer = pointer;
+            left();
+        } else {
+            if (right_pointer != invalind) {
+                return;
+            }
+            right_pointer = pointer;
+            right();
+        }
+    }
 
+    @Override
+    public void touchUp(Vector2 touch, int pointer, int button) {
+        if (pointer == left_pointer) {
+            left_pointer = invalind;
+            if (right_pointer != invalind) {
+                right();
+            } else {
+                stop();
+            }
+        } else if (pointer == right_pointer) {
+            right_pointer = invalind;
+            if (left_pointer != invalind) {
+                left();
+            } else {
+                stop();
+            }
+        }
+    }
     public void keyDown(int keycode) {
         switch (keycode){
             case Input.Keys.A:
@@ -96,42 +126,6 @@ public class Main_ship extends Ship {
                     stop();
                 }
                 break;
-        }
-    }
-
-    @Override
-    public void touchDown(Vector2 touch, int pointer, int button) {
-        if (touch.x < worldBounds.pos.x) {
-            if (left_pointer != invalind) {
-                return;
-            }
-            left_pointer = pointer;
-            left();
-        } else {
-            if (right_pointer != invalind) {
-                return;
-            }
-            right_pointer = pointer;
-            right();
-        }
-    }
-
-    @Override
-    public void touchUp(Vector2 touch, int pointer, int button) {
-        if (pointer == left_pointer) {
-            left_pointer = invalind;
-            if (right_pointer != invalind) {
-                right();
-            } else {
-                stop();
-            }
-        } else if (pointer == right_pointer) {
-            right_pointer = invalind;
-            if (left_pointer != invalind) {
-                left();
-            } else {
-                stop();
-            }
         }
     }
     public boolean isBulletCollision(Rect bullet){

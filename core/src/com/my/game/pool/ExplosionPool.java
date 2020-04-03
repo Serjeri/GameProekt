@@ -14,7 +14,6 @@ public class ExplosionPool extends SpritePool<Explosion> {
         this.atlas = atlas;
         this.exploseSound = exploseSound;
     }
-
     @Override
     protected Explosion newObject() {
         return new Explosion(atlas,exploseSound);

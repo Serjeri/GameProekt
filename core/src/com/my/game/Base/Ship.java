@@ -10,6 +10,7 @@ import com.my.game.sprite.Bullet;
 import com.my.game.sprite.Explosion;
 
 public class Ship extends Sprite {
+    protected final float damageInterval = 0.1f;
 
     protected  Vector2 v;
     protected  Vector2 v0;
@@ -17,23 +18,21 @@ public class Ship extends Sprite {
     protected Rect worldBounds;
 
     protected BulletPool bulletPool;
+    protected ExplosionPool explosionPool;
     protected TextureRegion bulletRegion;
     protected  Vector2 bulletV;
     protected  Vector2 bulletPos;
     protected float bulletHeight;
     protected int damage;
 
-    protected final float damageInterval = 0.5f;
-    protected  float damageTimer = damageInterval;
-
-    protected int hp;
-
     protected float time;
     protected float interval;
 
-    protected Sound shootSound;
-    protected ExplosionPool explosionPool;
+    protected  float damageTimer = damageInterval;
 
+    protected Sound shootSound;
+
+    protected int hp;
 
     public Ship() {
     }
@@ -66,6 +65,7 @@ public class Ship extends Sprite {
         this.hp = 0;
         Boom();
     }
+
     public void Damage( int damage){
         this.hp -= damage;
         if(hp <= 0){
@@ -75,14 +75,17 @@ public class Ship extends Sprite {
         frame = 1;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
     protected void shoot() {
         shootSound.play();
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, bulletPos, bulletV,bulletHeight, worldBounds, damage);
     }
     protected void Boom (){
-        Explosion explosi = explosionPool.obtain();
-        explosi.set(getHeight(),pos);
-
+        Explosion explosion = explosionPool.obtain();
+        explosion.set(getHeight(),pos);
     }
 }

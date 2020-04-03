@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Button extends  Sprite {
+
     private static final float press = 0.9f;
 
     private int pointer;
@@ -21,7 +22,6 @@ public abstract class Button extends  Sprite {
         this.pointer = pointer;
         this.scale = press;
         this.pressed = true;
-
     }
 
     @Override

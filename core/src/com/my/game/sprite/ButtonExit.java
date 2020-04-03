@@ -10,6 +10,7 @@ import com.my.game.math.Rect;
 public class ButtonExit extends Button {
 
     private static final float padding = 0.05f;
+    private static final float size = 0.2f;
 
     public ButtonExit(TextureAtlas atlas) {
         super(atlas.findRegion("btExit"));
@@ -22,9 +23,8 @@ public class ButtonExit extends Button {
 
     @Override
     public void resize(Rect worldBounds) {
-        setHeightProportion(0.2f);
+        setHeightProportion(size);
         setRight(worldBounds.getRight() - padding);
         setBottom(worldBounds.getBottom() + padding);
-
     }
 }

@@ -7,21 +7,21 @@ import com.my.game.sprite.Enemy;
 
 public class EnemyPool extends SpritePool<Enemy> {
 
-    private  BulletPool bulletPool;
-    private Sound soundShoot;
-    private Rect worldBounds;
+    private BulletPool bulletPool;
     private ExplosionPool explosionPool;
+    private Sound shootSound;
+    private Rect worldBounds;
 
     public EnemyPool(BulletPool bulletPool,ExplosionPool explosionPool ,Sound soundShoot,Rect worldBounds) {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
-        this.soundShoot = soundShoot;
+        this.shootSound = soundShoot;
         this.worldBounds = worldBounds;
     }
 
     @Override
     protected Enemy newObject() {
-        return new Enemy(bulletPool,explosionPool,soundShoot,worldBounds);
+        return new Enemy(bulletPool,explosionPool,shootSound,worldBounds);
     }
 
 }

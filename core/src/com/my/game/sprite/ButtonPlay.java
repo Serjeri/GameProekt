@@ -10,11 +10,10 @@ import com.my.game.math.Rect;
 
 public class ButtonPlay extends Button {
 
+    private static final float padding = 0.05f;
     private static final float size = 0.26f;
 
     private final Game game;
-
-    private static final float padding = 0.05f;
 
     public ButtonPlay(TextureAtlas atlas,Game game) {
         super(atlas.findRegion("btPlay"));

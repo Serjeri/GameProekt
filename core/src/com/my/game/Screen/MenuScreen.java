@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-
 import com.my.game.Base.BaseScreen;
 import com.my.game.math.Rect;
 import com.my.game.sprite.Background;
@@ -16,6 +15,8 @@ import com.my.game.sprite.Star;
 
 public class MenuScreen extends BaseScreen {
 
+    private static final int start_count = 256;
+
     private final Game game;
 
     private TextureAtlas atlas;
@@ -23,13 +24,10 @@ public class MenuScreen extends BaseScreen {
 
     private Background background;
 
-    private static final int start_count = 256;
-
     private Star[] star ;
 
     private ButtonExit buttonExit;
     private ButtonPlay buttonPlay;
-
 
     public MenuScreen(Game game) {
         this.game = game;
@@ -55,38 +53,19 @@ public class MenuScreen extends BaseScreen {
         update(delta);
         draw();
     }
-    private void update(float delta){
-        for (Star star : star) {
-            star.update(delta);
-        }
-    }
-
-    private void draw(){
-        Gdx.gl.glClearColor(0.5f, 0.9f, 0.4f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.begin();
-        background.draw(batch);
-        for (Star star : star) {
-            star.draw(batch);
-        }
-        buttonExit.draw(batch);
-        buttonPlay.draw(batch);
-        batch.end();
-    }
     @Override
     public void dispose() {
-        super.dispose();
         bg.dispose();
         atlas.dispose();
+        super.dispose();
     }
 
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         background.resize(worldBounds);
-        for (Star star : star) {
-            star.resize(worldBounds);
+        for (Star stars : star) {
+            stars.resize(worldBounds);
         }
         buttonExit.resize(worldBounds);
         buttonPlay.resize(worldBounds);
@@ -104,5 +83,24 @@ public class MenuScreen extends BaseScreen {
         buttonExit.touchUp(touch,pointer,button);
         buttonPlay.touchUp(touch,pointer,button);
         return false;
+    }
+
+    private void update(float delta){
+        for (Star stars : star) {
+            stars.update(delta);
+        }
+    }
+
+    private void draw(){
+        Gdx.gl.glClearColor(0.5f, 0.9f, 0.4f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        background.draw(batch);
+        for (Star star : star) {
+            star.draw(batch);
+        }
+        buttonExit.draw(batch);
+        buttonPlay.draw(batch);
+        batch.end();
     }
 }

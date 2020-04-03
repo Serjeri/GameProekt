@@ -15,7 +15,6 @@ public class MyClass extends Sprite {
 
     public MyClass(Texture region) {
         super(new TextureRegion(region));
-
         touch = new Vector2();
         V = new Vector2();
         Buf = new Vector2();
@@ -34,9 +33,7 @@ public class MyClass extends Sprite {
 
     @Override
     public void update(float delta) {
-
         Buf.set(touch);
-
         if (Buf.sub(pos).len() > V_len){
             pos.add(V);
         }else{

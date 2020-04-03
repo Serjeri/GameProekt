@@ -25,10 +25,11 @@ public class Explosion extends Sprite {
     @Override
     public void update(float delta) {
         tamer += delta;
-                if(tamer >= interval){
-                    tamer = 0;
-                }if(++frame == regions.length){
-                    destroy();
+        if(tamer >= interval){
+            tamer = 0;
+            if(++frame == regions.length) {
+                destroy();
+            }
         }
     }
 

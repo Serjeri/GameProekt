@@ -17,13 +17,12 @@ public class Bullet extends Sprite {
         v = new Vector2();
     }
 
-
     public void set(Sprite owner, TextureRegion region, Vector2 pos0, Vector2 v0, float height, Rect worldBounds, int damage) {
 
         this.owner = owner;
         this.regions[0] = region;
-        this.v.set(v0);
         this.pos.set(pos0);
+        this.v.set(v0);
         setHeightProportion(height);
         this.worldBounds = worldBounds;
         this.damage = damage;
@@ -35,7 +34,6 @@ public class Bullet extends Sprite {
         this.pos.mulAdd(v, delta);
         if (isOutside(worldBounds)) {
             destroy();
-
         }
     }
 

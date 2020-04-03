@@ -16,7 +16,6 @@ public abstract class SpritePool <T extends Sprite> {
         T object;
         if(freeObjects.isEmpty()){
             object = newObject();
-
         }else {
             object = freeObjects.remove(freeObjects.size() - 1);
         }
@@ -24,7 +23,6 @@ public abstract class SpritePool <T extends Sprite> {
         System.out.println(getClass().getName() + " activ/free " + activeObjects.size() + "/" + freeObjects.size());
         return object;
     }
-
     public  void updateActiveSprites(float delta){
         for (Sprite sprite:activeObjects) {
             if(!sprite.isDestroyed()){
@@ -32,7 +30,6 @@ public abstract class SpritePool <T extends Sprite> {
             }
         }
     }
-
     public  void drawActiveSprites(SpriteBatch batch){
         for (Sprite sprite:activeObjects) {
             if(!sprite.isDestroyed()){
@@ -40,32 +37,27 @@ public abstract class SpritePool <T extends Sprite> {
             }
         }
     }
-
+    public void freeAllDestroyedActiveObjects(){
+        for (int i = 0; i < activeObjects.size() ; i++) {
+            T sprite = activeObjects.get(i);
+            if(sprite.isDestroyed()){
+                free(sprite);
+                i--;
+                sprite.flushDestroy();
+            }
+        }
+    }
+    public void dispolse(){
+        activeObjects.clear();
+        freeObjects.clear();
+    }
+    public List<T> getActiveObjects() {
+        return activeObjects;
+    }
     private void free(T object){
         if(activeObjects.remove(object)){
             freeObjects.add(object);
         }
         System.out.println(getClass().getName() + " activ/free " + activeObjects.size() + "/" + freeObjects.size());
-
-    }
-
-    public void freeAllDestroyedActiveObjects(){
-        for (int i = 0; i <activeObjects.size() ; i++) {
-            T sprite = activeObjects.get(i);
-            if(sprite.isDestroyed()){
-                free(sprite);
-                i--;
-                sprite.flush();
-            }
-        }
-    }
-
-    public List<T> getActiveObjects() {
-        return activeObjects;
-    }
-
-    public void dispolse(){
-        activeObjects.clear();
-        freeObjects.clear();
     }
 }

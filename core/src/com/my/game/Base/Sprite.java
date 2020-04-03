@@ -3,7 +3,6 @@ package com.my.game.Base;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
 import com.my.game.math.Rect;
 import com.my.game.utils.Regions;
 
@@ -15,12 +14,7 @@ public abstract class Sprite extends Rect {
     protected int frame;
     protected boolean destroyed;
 
-
-    public Sprite(TextureRegion region, int rows, int cols, int frames) {
-        if (region == null) {
-            throw new RuntimeException("Не задана текстура");
-        }
-        this.regions = Regions.split(region, rows, cols, frames);
+    public Sprite() {
     }
 
     public Sprite(TextureRegion region) {
@@ -31,9 +25,12 @@ public abstract class Sprite extends Rect {
         regions[0] = region;
     }
 
-    protected Sprite() {
+    public Sprite(TextureRegion region, int rows, int cols, int frames) {
+        if (region == null) {
+            throw new RuntimeException("Не задана текстура");
+        }
+        this.regions = Regions.split(region, rows, cols, frames);
     }
-
     public void draw(SpriteBatch batch) {
         batch.draw(
                 regions[frame],
@@ -80,7 +77,7 @@ public abstract class Sprite extends Rect {
     public void destroy(){
         this.destroyed = true;
     }
-    public void flush () {
+    public void flushDestroy() {
         this.destroyed = false;
     }
 
