@@ -13,6 +13,7 @@ import com.my.game.pool.EnemyPool;
 import com.my.game.pool.ExplosionPool;
 import com.my.game.sprite.Background;
 import com.my.game.sprite.Bullet;
+import com.my.game.sprite.Button_New_Game;
 import com.my.game.sprite.Enemy;
 import com.my.game.sprite.Game_Over;
 import com.my.game.sprite.Main_ship;
@@ -48,6 +49,7 @@ public class GameScreen extends BaseScreen {
     private State prevState;
 
     private Game_Over game_over;
+    private Button_New_Game button_new_game;
 
     @Override
     public void show() {
@@ -70,6 +72,7 @@ public class GameScreen extends BaseScreen {
         music.setLooping(true);
         music.play();
         game_over = new Game_Over(atlas);
+        button_new_game = new Button_New_Game(atlas, this);
         state = State.play;
     }
 
@@ -90,6 +93,7 @@ public class GameScreen extends BaseScreen {
         }
         main_ship.resize(worldBounds);
         game_over.resize(worldBounds);
+        button_new_game.resize(worldBounds);
     }
 
     @Override
@@ -139,6 +143,8 @@ public class GameScreen extends BaseScreen {
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         if (state == State.play) {
             main_ship.touchDown(touch, pointer, button);
+        }else if(state == State.game_over){
+            button_new_game.touchDown(touch,pointer,button);
         }
         return false;
     }
@@ -147,6 +153,8 @@ public class GameScreen extends BaseScreen {
     public boolean touchUp(Vector2 touch, int pointer, int button) {
         if (state == State.play) {
             main_ship.touchUp(touch, pointer, button);
+        }else if(state == State.game_over){
+            button_new_game.touchUp(touch,pointer,button);
         }
         return false;
     }
@@ -217,7 +225,17 @@ public class GameScreen extends BaseScreen {
             enemyPool.drawActiveSprites(batch);
         } else if (state == State.game_over) {
             game_over.draw(batch);
+            button_new_game.draw(batch);
         }
         batch.end();
+    }
+
+    public void startNewGame () {
+        // не разобрался copy past  с видео
+        state = State.play;
+        main_ship.startGame();
+        bulletPool.freeAllActiveObjects();
+        enemyPool.freeAllActiveObjects();
+        explosionPool.freeAllActiveObjects();
     }
 }

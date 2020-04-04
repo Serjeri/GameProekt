@@ -11,6 +11,7 @@ import com.my.game.pool.ExplosionPool;
 
 public class Main_ship extends Ship {
 
+    private static final int hpBegin = 10;
     private static final int  invalind = -1;
 
     private boolean press_left;
@@ -30,9 +31,22 @@ public class Main_ship extends Ship {
         this.bulletHeight = 0.01f;
         this.damage = 1;
         this.interval = 0.5f;
-        this.hp = 10;
+        this.hp = hpBegin;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
+
+    public void startGame(){
+        // взято с видео не разобрался
+        this.hp = hpBegin;
+        stop();
+        press_left = false;
+        press_right = false;
+        left_pointer = invalind;
+        right_pointer = invalind;
+        this.pos.x = worldBounds.pos.x;
+        flushDestroy();
+    }
+
     @Override
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;

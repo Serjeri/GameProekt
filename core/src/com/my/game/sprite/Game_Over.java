@@ -13,6 +13,6 @@ public class Game_Over extends Sprite {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         setHeightProportion(0.09f);
-        setTop(0.1f);
+        setBottom(0.05f);
     }
 }
