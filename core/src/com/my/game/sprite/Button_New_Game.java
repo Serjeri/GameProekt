@@ -16,7 +16,7 @@ public class Button_New_Game extends New_Game {
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
-        setHeightProportion(0.09f);
+        setHeightProportion(0.06f);
         setTop(-0.01f);
     }
 
