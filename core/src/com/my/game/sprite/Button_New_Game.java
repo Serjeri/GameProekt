@@ -1,7 +1,6 @@
 package com.my.game.sprite;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.my.game.Base.New_Game;
 import com.my.game.Screen.GameScreen;
 import com.my.game.math.Rect;

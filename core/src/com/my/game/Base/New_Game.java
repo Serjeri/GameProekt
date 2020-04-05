@@ -17,7 +17,7 @@ public abstract class New_Game extends  Sprite {
             return;
         }
         this.Buttton = pointer;
-        this.scale = 0.5f;
+        this.scale = 0.1f;
         this.pressed = true;
     }
 

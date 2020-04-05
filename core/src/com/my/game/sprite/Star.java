@@ -10,7 +10,7 @@ public class Star extends Sprite {
 
     private static  final float start_heigh = 0.005f;
 
-    private final Vector2 v;
+    protected final Vector2 v;
     private Rect worldBounds;
 
     private float anime_time;
@@ -35,15 +35,7 @@ public class Star extends Sprite {
     @Override
     public void update(float delta) {
         pos.mulAdd(v, delta);
-        if(getRight() < worldBounds.getLeft()){
-            setLeft(worldBounds.getRight());
-        }if(getLeft() > worldBounds.getRight()){
-            setLeft(worldBounds.getLeft());
-        }if(getTop() < worldBounds.getBottom()){
-            setBottom(worldBounds.getTop());
-        }if(getBottom() > worldBounds.getTop()){
-            setTop(worldBounds.getBottom());
-        }
+        chekAndHandleBounds();
         anime_time += delta;
 
         if(anime_time >= anime_interval){
@@ -54,4 +46,15 @@ public class Star extends Sprite {
         }
     }
 
+    public void chekAndHandleBounds(){
+        if(getRight() < worldBounds.getLeft()){
+            setLeft(worldBounds.getRight());
+        }if(getLeft() > worldBounds.getRight()){
+            setLeft(worldBounds.getLeft());
+        }if(getTop() < worldBounds.getBottom()){
+            setBottom(worldBounds.getTop());
+        }if(getBottom() > worldBounds.getTop()){
+            setTop(worldBounds.getBottom());
+        }
+    }
 }

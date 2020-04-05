@@ -11,7 +11,7 @@ import com.my.game.pool.ExplosionPool;
 
 public class Main_ship extends Ship {
 
-    private static final int hpBegin = 10;
+    private static final int hpBegin = 1000;
     private static final int  invalind = -1;
 
     private boolean press_left;
@@ -29,7 +29,7 @@ public class Main_ship extends Ship {
         this.bulletV = new Vector2(0,0.5f);
         this.bulletPos =  new Vector2();
         this.bulletHeight = 0.01f;
-        this.damage = 1;
+        this.damage = 10000;
         this.interval = 0.5f;
         this.hp = hpBegin;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));

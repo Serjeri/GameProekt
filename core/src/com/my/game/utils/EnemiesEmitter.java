@@ -32,6 +32,8 @@ public class EnemiesEmitter {
     private static final float ENEMY_BIG_RELOAD_INTERVAL = 1f;
     private static final int ENEMY_BIG_HP = 10;
 
+    private int level = 1;
+
     private Rect worldBounds;
 
     private float generateInterval = 4f;
@@ -41,10 +43,9 @@ public class EnemiesEmitter {
     private final TextureRegion[] enemyMediumRegions;
     private final TextureRegion[] enemyBigRegions;
 
-    private final Vector2 enemySmallV = new Vector2(0f, -0.2f);
-    private final Vector2 enemyMediumV = new Vector2(0f, -0.03f);
-    private final Vector2 enemyBigV = new Vector2(0f, -0.005f);
-
+    private final Vector2 enemySmallV = new Vector2(0f, -0.1f*level);
+    private final Vector2 enemyMediumV = new Vector2(0f, -0.02f*level);
+    private final Vector2 enemyBigV = new Vector2(0f, -0.05f*level);
     private TextureRegion bulletRegion;
 
     private final EnemyPool enemyPool;
@@ -58,8 +59,9 @@ public class EnemiesEmitter {
         this.bulletRegion = atlas.findRegion("bulletEnemy");
     }
 
-    public void generate(float delta) {
+    public void generate(float delta, int frags) {
         generateTimer += delta;
+        level = frags / 3 + 1;
         if (generateTimer >= generateInterval) {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
@@ -67,14 +69,14 @@ public class EnemiesEmitter {
             if (type < 0.5f) {
                 enemy.set(
                         enemySmallRegions,
-                        enemySmallV,
+                        enemySmallV ,
                         bulletRegion,
                         ENEMY_SMALL_BULLET_HEIGHT,
                         ENEMY_SMALL_BULLET_VY,
-                        ENEMY_SMALL_DAMAGE,
-                        ENEMY_SMALL_RELOAD_INTERVAL,
+                        ENEMY_SMALL_DAMAGE * level,
+                        ENEMY_SMALL_RELOAD_INTERVAL * level,
                         ENEMY_SMALL_HEIGHT,
-                        ENEMY_SMALL_HP
+                        ENEMY_SMALL_HP * level
                 );
             } else if (type < 0.8) {
                 enemy.set(
@@ -83,10 +85,10 @@ public class EnemiesEmitter {
                         bulletRegion,
                         ENEMY_MEDIUM_BULLET_HEIGHT,
                         ENEMY_MEDIUM_BULLET_VY,
-                        ENEMY_MEDIUM_DAMAGE,
-                        ENEMY_MEDIUM_RELOAD_INTERVAL,
+                        ENEMY_MEDIUM_DAMAGE * level,
+                        ENEMY_MEDIUM_RELOAD_INTERVAL* level,
                         ENEMY_MEDIUM_HEIGHT,
-                        ENEMY_MEDIUM_HP
+                        ENEMY_MEDIUM_HP * level
                 );
             } else {
                 enemy.set(
@@ -95,15 +97,19 @@ public class EnemiesEmitter {
                         bulletRegion,
                         ENEMY_BIG_BULLET_HEIGHT,
                         ENEMY_BIG_BULLET_VY,
-                        ENEMY_BIG_DAMAGE,
-                        ENEMY_BIG_RELOAD_INTERVAL,
+                        ENEMY_BIG_DAMAGE * level,
+                        ENEMY_BIG_RELOAD_INTERVAL* level,
                         ENEMY_BIG_HEIGHT,
-                        ENEMY_BIG_HP
+                        ENEMY_BIG_HP * level
                 );
             }
             enemy.setBottom(worldBounds.getTop());
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
         }
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
 
